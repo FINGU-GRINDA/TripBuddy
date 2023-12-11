@@ -28,7 +28,7 @@ from langchain.agents import initialize_agent
 from langchain.utilities import GoogleSearchAPIWrapper# import csv
 from langchain.agents import AgentType
 from langchain.agents import load_tools
-
+import json
 # Load environment variables
 load_dotenv()
 dotenv_result = load_dotenv()
@@ -49,7 +49,10 @@ supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 # json_file_path = os.path.join(current_dir, "google-credentials.json")
 
 # Set the GOOGLE_APPLICATION_CREDENTIALS environment variable
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+cred = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+credentials = json.loads(cred)
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = json.dumps(credentials)
 # cred = service_account.Credentials.from_service_account_file("google-credentials.json")
 # print(cred)
 client = speech.SpeechClient()
