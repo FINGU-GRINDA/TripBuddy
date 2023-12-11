@@ -37,11 +37,11 @@ SUPABASE_KEY = os.getenv("SUPABASE_KEY2")
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 # Construct the absolute path to the JSON file
-current_dir = os.path.dirname(os.path.abspath(__file__))
-json_file_path = os.path.join(current_dir, "google-credentials.json")
+# current_dir = os.path.dirname(os.path.abspath(__file__))
+# json_file_path = os.path.join(current_dir, "google-credentials.json")
 
 # Set the GOOGLE_APPLICATION_CREDENTIALS environment variable
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = json_file_path
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 # cred = service_account.Credentials.from_service_account_file("google-credentials.json")
 # print(cred)
 client = speech.SpeechClient()
