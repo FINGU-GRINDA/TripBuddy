@@ -24,6 +24,7 @@ from google.cloud import speech
 # from google.cloud import speech
 from libs.vertexAI.AudioConversion import mp3_to_wav_bytes
 import traceback
+import json
 
 # Load environment variables
 load_dotenv()
@@ -41,8 +42,20 @@ supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 # json_file_path = os.path.join(current_dir, "google-credentials.json")
 
 # Set the GOOGLE_APPLICATION_CREDENTIALS environment variable
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
-# cred = service_account.Credentials.from_service_account_file("google-credentials.json")
+cred = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+credentials = json.loads(cred)
+# Get the current working directory
+current_directory = os.getcwd()
+
+# Create a path for the keyfile in the current directory
+keyfile_path = os.path.join(current_directory, 'keyfile.json')
+
+# Write the credentials to the keyfile
+with open(keyfile_path, 'w') as file:
+    json.dump(credentials, file)
+
+# Set the environment variable to the keyfile path
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = keyfile_path# cred = service_account.Credentials.from_service_account_file("google-credentials.json")
 # print(cred)
 client = speech.SpeechClient()
 
